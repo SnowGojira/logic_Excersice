@@ -4,7 +4,6 @@
 //例如[1,3,2]数组，需要[1,2,1]就都会满意
 
 function countSmallestAmount(array) {
-  let sum = 1;
   let indexArray = [];
   let arrayContainer = [];
 
@@ -25,15 +24,14 @@ function countSmallestAmount(array) {
   let stepArray = [1];
   function recuresion(step = 1, i = 1) {
     if (indexArray.length == stepArray.length) return stepArray;
-    // console.log(Math.abs(indexArray[i] - indexArray[i - 1]));
+
     if (Math.abs(indexArray[i] - indexArray[i - 1]) == 1) {
       step++;
-      stepArray = [...stepArray, step];
     } else {
       step = 1;
-      stepArray = [...stepArray, step];
     }
     // console.log("step", step);
+    stepArray = [...stepArray, step];
     i++;
     return recuresion(step, i);
   }
