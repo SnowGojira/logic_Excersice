@@ -1,6 +1,7 @@
 //输入一个十位的随机数组
 //得到每个数组基本的配比单位是1
-//数字大的不能高
+//相邻的数字中大要多分配，才能保证满意
+//例如[1,3,2]数组，需要[1,2,1]就都会满意
 
 function countSmallestAmount(array) {
   let sum = 1;
@@ -14,7 +15,7 @@ function countSmallestAmount(array) {
       value: array[i],
     });
   }
-  console.log(arrayContainer);
+
   arrayContainer.sort(function (a, b) {
     return a.value - b.value;
   });
