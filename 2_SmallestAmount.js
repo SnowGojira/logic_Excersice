@@ -18,6 +18,7 @@ function countSmallestAmount(array) {
   arrayContainer.sort(function (a, b) {
     return a.value - b.value;
   });
+  //排序后的数组取得相应的结构
   indexArray = arrayContainer.map((obj) => obj.index);
   console.log(arrayContainer);
   console.log(indexArray);
@@ -36,9 +37,41 @@ function countSmallestAmount(array) {
     return recuresion(step, i);
   }
   recuresion();
-  console.log("配比方案", stepArray);
+  // console.log("配比方案", stepArray);
   return stepArray.reduce((a, b) => a + b);
 }
 
-let array = [2, 3, 4, 9, 6, 7, 8, 1, 10, 4];
+function countSmallestAmount2(array) {
+  let indexArray = [];
+  let arrayContainer = [];
+  for (let i in array) {
+    arrayContainer.push({
+      index: i,
+      value: array[i],
+    });
+  }
+
+  arrayContainer.sort(function (a, b) {
+    return a.value - b.value;
+  });
+
+  s = arrayContainer.map((obj) => obj.index);
+  // console.log(s);
+
+  let b = new Array(10).fill(0);
+  for (let i = 0; i < s.length - 1; i++) {
+    let _s = parseInt(s[i]);
+    let _r = _s + 1 > 9 ? 9 : _s + 1,
+      _l = s[i] - 1 < 0 ? 0 : s[i] - 1;
+    b[_s] = max(b[_r], b[_l]) + 1;
+    function max(a, b) {
+      return a > b ? a : b;
+    }
+  }
+  console.log("b", b);
+  return b.reduce((a, b) => a + b) + 1;
+}
+
+let array = [10, 9, 8, 7, 1, 2, 3, 4, 5, 6];
 console.log(countSmallestAmount(array));
+console.log(countSmallestAmount2(array));
