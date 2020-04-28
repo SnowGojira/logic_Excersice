@@ -23,7 +23,6 @@ function countSmallestAmount(array) {
   console.log(arrayContainer);
   console.log(indexArray);
   let stepArray = [1];
-  let step = 1;
   function recuresion(step = 1, i = 1) {
     if (indexArray.length == stepArray.length) return stepArray;
     // console.log(Math.abs(indexArray[i] - indexArray[i - 1]));
@@ -39,7 +38,7 @@ function countSmallestAmount(array) {
     return recuresion(step, i);
   }
   recuresion();
-  console.log("stepArray", stepArray);
+  console.log("配比方案", stepArray);
   return stepArray.reduce((a, b) => a + b);
 }
 
