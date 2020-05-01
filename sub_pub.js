@@ -11,7 +11,6 @@ var EventBus = function () {
   this.emitEventListeners = function (eventName, params) {
     if (!eventTopics[eventName] || eventTopics[eventName].length < 1) return;
     eventTopics[eventName].forEach(function (listener) {
-      console.log("listener", listener);
       listener(!!params ? params : {});
     });
   };
