@@ -1,30 +1,34 @@
 //归并排序
 
-function mergeSort(arr) {
-  let array = arr.slice();
-  //为一的数组就是已经sort过的数组
-  if (array.length < 2) return array;
+// function mergeSort(arr) {
+//   let array = arr.slice();
+//   //为一的数组就是已经sort过的数组
+//   if (array.length < 2) return array;
 
-  let l = array.length;
-  let m = Math.floor(l / 2);
-  let left = array.slice(0, m);
-  let right = array.slice(m, l);
+//   let l = array.length;
+//   let m = Math.floor(l / 2);
+//   let left = array.slice(0, m);
+//   let right = array.slice(m, l);
 
-  return merge(mergeSort(left), mergeSort(right));
-}
+//   return merge(mergeSort(left), mergeSort(right));
+// }
 
-function merge(left, right) {
-  let result = [];
-  //其中一个长度为0，就返回数组
-  while (left.length && right.length) {
-    if (left[0] < right[0]) {
-      result.push(left.shift());
-    } else {
-      result.push(right.shift());
-    }
-  }
+// function merge(left, right) {
+//   let result = [];
+//   //其中一个长度为0，就返回数组
+//   while (left.length && right.length) {
+//     if (left[0] < right[0]) {
+//       result.push(left.shift());
+//     } else {
+//       result.push(right.shift());
+//     }
+//   }
 
-  return [...result, ...left, ...right];
+//   return [...result, ...left, ...right];
+// }
+
+function mergeSort(nums) {
+  return;
 }
 
 const array = [10, 1, 4, 3, 5, 9, 7, 6, 8, 2];
