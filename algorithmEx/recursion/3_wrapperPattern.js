@@ -18,6 +18,6 @@ function MemoFnLoop(i, end) {
 }
 
 console.log("~~~ wrapperFnLoop ~~~");
-wrapperFnLoop(1, 5);
+wrapperFnLoop(1, 6);
 console.log("~~~ MemoFnLoop ~~~");
 MemoFnLoop(1, 6);
