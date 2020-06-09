@@ -12,4 +12,18 @@ function joinElements(array, joinString) {
   return recurse(0, "");
 }
 
-console.log(joinElements(["s", "cr", "t cod", " :) :)"], "e"));
+//练习题：把上面的代码改写成for loop的枚举形式
+function joinElementsLoop(array, joinString) {
+  let result = "";
+  for (i in array) {
+    if (i == array.length - 1) {
+      result += array[i];
+    } else {
+      result += array[i] + joinString;
+    }
+  }
+
+  return result;
+}
+// console.log(joinElements(["s", "cr", "t cod", " :) :)"], "e"));
+console.log(joinElementsLoop(["s", "cr", "t cod", " :) :)"], "e"));
