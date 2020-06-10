@@ -28,8 +28,27 @@
 // }
 
 function mergeSort(nums) {
-  return;
-}
+  //return
+  if (nums.length < 2) return nums;
+  //divide
+  let mid = Math.floor(nums.length / 2);
 
+  let left = mergeSort(nums.slice(0, mid));
+  let right = mergeSort(nums.slice(mid, nums.length));
+
+  return merge(left, right);
+}
+function merge(left, right) {
+  let result = [];
+  while (left.length && right.length) {
+    if (left[0] < right[0]) {
+      result.push(left.shift());
+    } else {
+      result.push(right.shift());
+    }
+  }
+
+  return [...result, ...left, ...right];
+}
 const array = [10, 1, 4, 3, 5, 9, 7, 6, 8, 2];
 console.log(mergeSort(array));

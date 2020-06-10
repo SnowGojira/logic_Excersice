@@ -18,9 +18,20 @@
 // }
 
 function bubbleSort(nums) {
-  let paused;
+  let swapped;
+  let array = nums.slice();
 
-  return nums;
+  do {
+    swapped = false;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] > array[i + 1]) {
+        [array[i], array[i + 1]] = [array[i + 1], array[i]];
+        swapped = true;
+      }
+    }
+  } while (swapped);
+
+  return array;
 }
 const array = [10, 1, 4, 3, 5, 9, 7, 6, 8, 2];
 console.log(bubbleSort(array));
