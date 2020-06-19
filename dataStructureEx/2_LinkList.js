@@ -16,17 +16,16 @@ class LinkedList {
     let node = new Node(value);
     if (!this.first) {
       //如果是空数列，first和last都指向新加入的node
-      //this.first = node;<--代码优化提纯
+      this.first = node;
       this.last = node;
     } else {
       //first不为空
       //新加入的node的next指向node
       //first指向新的node
       node.next = this.first;
-      //this.first = node;<--代码优化提纯
+      this.first = node;
     }
 
-    this.first = node;
     this.length += 1;
   }
 
@@ -37,16 +36,15 @@ class LinkedList {
       //如果first node为空
       //first 和last都指定为node
       this.first = node;
-      //this.last = node;<--代码优化提纯
+      this.last = node;
     } else {
       //如果first node不为空
       //根据定义上一个last的node的next指向新的node
       //last箭头指向node
       this.last.next = node;
-      //this.last = node;<--代码优化提纯
+      this.last = node;
     }
 
-    this.last = node;
     this.length += 1;
   }
 
