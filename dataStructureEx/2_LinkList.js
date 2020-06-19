@@ -54,7 +54,22 @@ class LinkedList {
 
   contains(value) {}
 
-  indexOf(index) {}
+  indexOf(value) {
+    //通过循环查找
+    let current = this.first;
+    let i = 0;
+    //current到达尾部停止
+    //判断标准last指向null
+    while (current) {
+      if (current.value == value) {
+        return i;
+      }
+      current = current.next;
+      i++;
+    }
+
+    return -1;
+  }
 }
 
 class Node {
@@ -90,4 +105,10 @@ console.log(
     LinkedListB.first.next.value == 2 &&
     LinkedListB.first.next.next.value == 3 &&
     LinkedListB.last.value == 3
+);
+
+console.log(
+  LinkedListB.indexOf(4) == -1 &&
+    LinkedListA.indexOf(3) == 0 &&
+    LinkedListB.indexOf(3) == 2
 );
