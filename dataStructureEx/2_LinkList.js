@@ -1,7 +1,7 @@
 //1. addFisrt添加链接头
 //2. addLast添加链接尾
-//3. deleteFisrt删除链接头
-//4. deleteLast删除链接尾
+//3. removeFisrt删除链接头
+//4. removeLast删除链接尾
 //5. contains查找是否含有该元素，返回boolean
 //6. indexOf查找索引找到对饮的元素
 class LinkedList {
@@ -48,11 +48,69 @@ class LinkedList {
     this.length += 1;
   }
 
-  deleteFirst() {}
+  removeFirst() {
+    if (!this.first) {
+      //情况一，如果链表为空
+      //返回错误
+      throw Error("the linkedlist is null");
+    }
 
-  deleteLast() {}
+    if (this.first == this.last) {
+      //情况二，如果链表只有一个
+      //将两个指针均指向null
+      this.first = this.length = null;
+      return;
+    }
 
-  contains(value) {}
+    //情况三，正常链表
+    //找到即将成为first的second node
+    let second = this.first.next;
+    //断开fisrt next指向，漂里它
+    //等待垃圾回收
+    this.first.next = null;
+    //将指针指向second
+    this.first = second;
+    this.length -= 1;
+  }
+
+  removeLast() {
+    if (!this.first) {
+      //情况一，如果链表为空
+      //返回错误
+      throw Error("the linkedlist is null");
+    }
+
+    if (this.first == this.last) {
+      //情况二，如果链表只有一个
+      //将两个指针均指向null
+      this.first = this.length = null;
+      return;
+    }
+
+    //情况三，正常链表
+    //找到即将成为last的prevLast
+    let current = this.first;
+    let prevLast;
+    //遍历寻找prevLast
+    while (current !== null) {
+      //last之前是prevlast
+      if (current.next == this.last) {
+        prevLast = current;
+      }
+      current = current.next;
+    }
+    //prevlast赋值为last
+    //next指针清空
+    this.last = prevLast;
+    prevLast.next = null;
+
+    this.length -= 1;
+  }
+
+  contains(value) {
+    //引用indexOf就可以
+    return this.indexOf(value) !== -1;
+  }
 
   indexOf(value) {
     //通过循环查找
@@ -112,3 +170,10 @@ console.log(
     LinkedListA.indexOf(3) == 0 &&
     LinkedListB.indexOf(3) == 2
 );
+
+console.log(LinkedListA.contains(2) && LinkedListB.contains(4) == false);
+LinkedListB.removeFirst();
+console.log(LinkedListB.first.value == 2 && LinkedListB.first.next.value == 3);
+
+LinkedListA.removeLast();
+console.log(LinkedListA.last.value == 2);
