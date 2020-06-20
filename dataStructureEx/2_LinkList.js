@@ -59,7 +59,7 @@ class LinkedList {
       //情况二，如果链表只有一个
       //将两个指针均指向null
       this.first = this.length = null;
-      return;
+      this.length = 0;
     }
 
     //情况三，正常链表
@@ -84,7 +84,7 @@ class LinkedList {
       //情况二，如果链表只有一个
       //将两个指针均指向null
       this.first = this.length = null;
-      return;
+      this.length = 0;
     }
 
     //情况三，正常链表
@@ -92,7 +92,7 @@ class LinkedList {
     let current = this.first;
     let prevLast;
     //遍历寻找prevLast
-    while (current !== null) {
+    while (current) {
       //last之前是prevlast
       if (current.next == this.last) {
         prevLast = current;
@@ -128,6 +128,10 @@ class LinkedList {
 
     return -1;
   }
+
+  size() {
+    return this.length;
+  }
 }
 
 class Node {
@@ -137,14 +141,14 @@ class Node {
   }
 }
 
-//测试部分
+//测试部分不要动，最后的结果应该均为true
 
 var LinkedListA = new LinkedList();
 
 LinkedListA.addFirst(1);
 LinkedListA.addFirst(2);
 LinkedListA.addFirst(3);
-
+console.log("'addFirst' Test Result:");
 console.log(
   LinkedListA.first.value == 3 &&
     LinkedListA.first.next.value == 2 &&
@@ -157,23 +161,37 @@ var LinkedListB = new LinkedList();
 LinkedListB.addLast(1);
 LinkedListB.addLast(2);
 LinkedListB.addLast(3);
-
+console.log("'addLast' Test Result:");
 console.log(
   LinkedListB.first.value == 1 &&
     LinkedListB.first.next.value == 2 &&
     LinkedListB.first.next.next.value == 3 &&
     LinkedListB.last.value == 3
 );
-
+console.log("'indexOf' Test Result:");
 console.log(
   LinkedListB.indexOf(4) == -1 &&
     LinkedListA.indexOf(3) == 0 &&
     LinkedListB.indexOf(3) == 2
 );
-
+console.log("'contains' Test Result:");
 console.log(LinkedListA.contains(2) && LinkedListB.contains(4) == false);
 LinkedListB.removeFirst();
+console.log("'removeFisrt' Test Result:");
 console.log(LinkedListB.first.value == 2 && LinkedListB.first.next.value == 3);
 
 LinkedListA.removeLast();
+console.log("'removeLast' Test Result:");
 console.log(LinkedListA.last.value == 2);
+
+var LinkedListC = new LinkedList();
+console.log("'size' Test Result:");
+console.log(
+  LinkedListA.size() == 2 && LinkedListB.size() == 2 && LinkedListC.size() == 0
+);
+
+console.log("'' Test Result:");
+console.log("'' Test Result:");
+console.log("'' Test Result:");
+console.log("'' Test Result:");
+console.log("'' Test Result:");
