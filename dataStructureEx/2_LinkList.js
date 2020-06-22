@@ -4,12 +4,19 @@
 //4. removeLast删除链接尾
 //5. contains查找是否含有该元素，返回boolean
 //6. indexOf查找索引找到对饮的元素
+//7. size获得大小
+//8. toArray转换为数组
+//9. reverse反转链表
+//10. getKthFromTheEnd查找从末尾数第K个node
 class LinkedList {
   constructor() {
     //first 和 last的type是node
     this.first = null;
     this.last = null;
     this.length = 0;
+  }
+  _isEmpty() {
+    return !this.first;
   }
 
   addFirst(value) {
@@ -32,7 +39,7 @@ class LinkedList {
   addLast(value) {
     let node = new Node(value);
 
-    if (!this.first) {
+    if (this._isEmpty()) {
       //如果first node为空
       //first 和last都指定为node
       this.first = node;
@@ -49,7 +56,7 @@ class LinkedList {
   }
 
   removeFirst() {
-    if (!this.first) {
+    if (this._isEmpty()) {
       //情况一，如果链表为空
       //返回错误
       throw Error("the linkedlist is null");
@@ -74,7 +81,7 @@ class LinkedList {
   }
 
   removeLast() {
-    if (!this.first) {
+    if (this._isEmpty()) {
       //情况一，如果链表为空
       //返回错误
       throw Error("the linkedlist is null");
@@ -132,6 +139,76 @@ class LinkedList {
   size() {
     return this.length;
   }
+
+  toArray() {
+    let array = [];
+    let current = this.first;
+    while (current) {
+      array.push(current.value);
+      current = current.next;
+    }
+
+    return array;
+  }
+
+  reverse() {
+    //情况一 链表为空抛出错误
+    if (this._isEmpty()) throw Error("the linkedlist is null");
+    //情况二 只有一项的链表，不需要反转
+    if (this.first == this.last) return;
+    //情况三 正常的反转
+    //保存头尾指针
+    let last = this.last;
+    let first = this.first;
+
+    //迭代反转指针
+    //[1->2->3]
+    // p<-c  n(防止丢失也要用变量存起来)
+    //    p<-c  n(c变成p，n变成新的c继续改方向)
+    let previous = this.first;
+    let current = previous.next;
+    while (current) {
+      let next = current.next;
+      //指针方向反转
+      current.next = previous;
+      //进入下一个迭代轮回
+      previous = current;
+      current = next;
+    }
+
+    //重新设置指针
+    this.last = first;
+    //原先first的next有指针，要置空
+    this.last.next = null;
+    this.first = last;
+  }
+
+  getKthFromTheEnd(k) {
+    //验证链表不为空
+    if (this._isEmpty()) throw Error("The LinkedList is null");
+
+    //正常情况下的查找
+    //查找开头点，
+    //从开头点数距离间隔k-1个node
+    //循环时当k-1个node到达尾端，那么此时开头点就是要返回的值
+    //[1,2,3,4,5]
+    // c   p
+    //...
+    //     c   p
+    let current = this.first;
+    let pivot = current;
+    for (let i = 0; i < k - 1; i++) {
+      pivot = pivot.next;
+      //防御k超出length的范围，pivot为空
+      if (!pivot) throw new Error("the value if out of range");
+    }
+    while (pivot !== this.last) {
+      current = current.next;
+      pivot = pivot.next;
+    }
+
+    return current.value;
+  }
 }
 
 class Node {
@@ -142,7 +219,8 @@ class Node {
 }
 
 //测试部分不要动，最后的结果应该均为true
-
+//===========================================================
+//===========================================================
 var LinkedListA = new LinkedList();
 
 LinkedListA.addFirst(1);
@@ -190,8 +268,29 @@ console.log(
   LinkedListA.size() == 2 && LinkedListB.size() == 2 && LinkedListC.size() == 0
 );
 
-console.log("'' Test Result:");
-console.log("'' Test Result:");
-console.log("'' Test Result:");
+console.log("'toArray' Test Result:");
+console.log(
+  LinkedListA.toArray().length == 2 &&
+    LinkedListA.toArray()[0] == 3 &&
+    LinkedListA.toArray()[1] == 2
+);
+
+LinkedListC.addLast(10);
+LinkedListC.addLast(20);
+LinkedListC.addLast(30);
+LinkedListC.addLast(40);
+LinkedListC.addLast(50);
+console.log("'reverse' Test Result:");
+LinkedListC.reverse();
+console.log(
+  LinkedListC.first.value == 50 &&
+    LinkedListC.first.next.value == 40 &&
+    LinkedListC.first.next.next.value == 30 &&
+    LinkedListC.first.next.next.next.value == 20 &&
+    LinkedListC.first.next.next.next.next.value == 10 &&
+    LinkedListC.last.value == 10
+);
+console.log("'getKthFromTheEnd' Test Result:");
+console.log(LinkedListC.getKthFromTheEnd(6));
 console.log("'' Test Result:");
 console.log("'' Test Result:");
