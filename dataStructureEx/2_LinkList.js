@@ -245,6 +245,22 @@ class LinkedList {
       return [middle.value, middle.next.value];
     }
   }
+
+  hasLoop() {
+    if (this._isEmpty()) throw new Error("the linkedlist is null");
+    //Floyd’s Cycle-finding Algorithm.
+    //快标走两步，慢标走一步，最后两者重合
+    let slow = this.first;
+    let fast = this.first;
+
+    while (fast && fast.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow == fast) return true;
+    }
+
+    return false;
+  }
 }
 
 class Node {
@@ -330,4 +346,16 @@ console.log("'getKthFromTheEnd' Test Result:");
 console.log(LinkedListC.getKthFromTheEnd(3) == 30);
 console.log("'findMiddle' Test Result:");
 console.log(LinkedListC.findMiddle() == 30);
-console.log("'' Test Result:");
+console.log("'hasLoop' Test Result:");
+
+var LoopLinkedlist = new LinkedList();
+LoopLinkedlist.addLast(10);
+LoopLinkedlist.addLast(20);
+LoopLinkedlist.addLast(30);
+
+var last = LoopLinkedlist.last;
+LoopLinkedlist.addLast(40);
+LoopLinkedlist.addLast(50);
+LoopLinkedlist.last.next = last;
+
+console.log(LinkedListC.hasLoop() == false && LoopLinkedlist.hasLoop());
