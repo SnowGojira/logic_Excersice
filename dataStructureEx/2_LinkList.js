@@ -154,17 +154,17 @@ class LinkedList {
   reverse() {
     //情况一 链表为空抛出错误
     if (this._isEmpty()) throw Error("the linkedlist is null");
-    //情况二 只有一项的链表，不需要反转
-    if (this.first == this.last) return;
-    //情况三 正常的反转
+
+    //情况二 正常反转
+    //算法说明：
+    //[1->2->3]
+    // p<-c  n(防止丢失也要用变量存起来)
+    //    p<-c  n(c变成p，n变成新的c继续改方向)
+
     //保存头尾指针
     let last = this.last;
     let first = this.first;
 
-    //迭代反转指针
-    //[1->2->3]
-    // p<-c  n(防止丢失也要用变量存起来)
-    //    p<-c  n(c变成p，n变成新的c继续改方向)
     let previous = this.first;
     let current = previous.next;
     while (current) {
@@ -291,6 +291,6 @@ console.log(
     LinkedListC.last.value == 10
 );
 console.log("'getKthFromTheEnd' Test Result:");
-console.log(LinkedListC.getKthFromTheEnd(6));
+console.log(LinkedListC.getKthFromTheEnd());
 console.log("'' Test Result:");
 console.log("'' Test Result:");
