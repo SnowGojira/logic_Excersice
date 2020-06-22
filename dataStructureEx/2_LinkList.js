@@ -209,6 +209,42 @@ class LinkedList {
 
     return current.value;
   }
+
+  findMiddle() {
+    if (this._isEmpty()) throw new Error("the linkedlist is null");
+    //奇数的时候
+    //1->1
+    //3->2
+    //5->3
+    //...
+    //node的点增加二，middle点增加一
+
+    //偶数的时候
+    //2->1,2
+    //4->2,3
+    //6->3,4
+    //...
+    //算法基本一致，只是middle要返回middle和middle.next
+    let current = this.first;
+    let middle = this.first;
+    while (
+      //奇数的时候
+      current != this.last &&
+      //偶数的时候
+      current.next != this.last
+    ) {
+      current = current.next.next;
+      middle = middle.next;
+    }
+
+    //如何判断奇偶？
+    //奇数的时候，最后一次增长指向last，偶数的时候指向null
+    if (current == this.last) {
+      return middle.value;
+    } else {
+      return [middle.value, middle.next.value];
+    }
+  }
 }
 
 class Node {
@@ -291,6 +327,7 @@ console.log(
     LinkedListC.last.value == 10
 );
 console.log("'getKthFromTheEnd' Test Result:");
-console.log(LinkedListC.getKthFromTheEnd());
-console.log("'' Test Result:");
+console.log(LinkedListC.getKthFromTheEnd(3) == 30);
+console.log("'findMiddle' Test Result:");
+console.log(LinkedListC.findMiddle() == 30);
 console.log("'' Test Result:");
