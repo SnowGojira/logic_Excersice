@@ -1,5 +1,117 @@
+//应用一
+//用链表创建一个queue
+//引入以下操作符
+// -enqueue -dequeue -peek -size -isEmpty
+class LinkedListQueue {
+  constructor() {
+    this.list = new LinkedList();
+  }
+
+  enqueue(value) {
+    this.list.addLast(value);
+  }
+
+  dequeue() {
+    this.list.removeFirst();
+  }
+
+  peek() {
+    return this.list.first.value;
+  }
+  size() {
+    return this.list.size();
+  }
+  isEmpty() {
+    return this.list.first == null;
+  }
+}
+
+//应用二
+//用两个堆栈实现queue
+// -enqueue -dequeue -peek -size -isEmpty
+class TwoStackQueue {
+  constructor() {
+    this.stackInput = new Stack();
+    this.stackOutput = new Stack();
+    this.count = 0;
+  }
+  _getInputStack() {
+    while (!this.stackOutput.isEmpty()) {
+      this.stackInput.push(this.stackOutput.pop());
+    }
+  }
+  _getOutputStack() {
+    while (!this.stackInput.isEmpty()) {
+      this.stackOutput.push(this.stackInput.pop());
+    }
+  }
+
+  enqueue(value) {
+    this._getInputStack();
+    this.stackInput.push(value);
+    this.count += 1;
+  }
+  dequeue() {
+    this._getOutputStack();
+    this.stackOutput.pop();
+    this.count -= 1;
+  }
+  peek() {
+    this._getOutputStack();
+    this.stackOutput.peek();
+  }
+  size() {
+    return this.count;
+  }
+  isEmpty() {
+    return this.count == 0;
+  }
+}
+
 //====================以下为测试和引用，不要动==========
 //====================================================
+//queue 类
+class Queue {
+  constructor() {
+    this.array = [];
+  }
+
+  enqueue(value) {
+    this.array.push(value);
+  }
+  dequeue() {
+    this.array.shift();
+  }
+  peek() {
+    return this.array[0];
+  }
+  size() {
+    return this.array.length;
+  }
+  isEmpty() {
+    return this.array.length == 0;
+  }
+}
+//stack 类
+class Stack {
+  constructor() {
+    this.array = [];
+  }
+
+  push(value) {
+    this.array.push(value);
+  }
+
+  pop() {
+    return this.array.pop();
+  }
+  peek() {
+    return this.array[this.array.length - 1];
+  }
+  isEmpty() {
+    return this.array.length == 0;
+  }
+}
 //LinkedList 类
 class LinkedList {
   constructor() {
@@ -262,3 +374,20 @@ class Node {
     this.next = null;
   }
 }
+
+let queue = new LinkedListQueue();
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+queue.enqueue(4);
+queue.dequeue();
+
+console.log(queue.isEmpty() == false && queue.size() == 3 && queue.peek() == 2);
+
+let queue2 = new TwoStackQueue();
+queue2.enqueue(1);
+queue2.enqueue(2);
+queue2.enqueue(3);
+queue2.enqueue(4);
+queue2.dequeue();
+console.log(queue2);
