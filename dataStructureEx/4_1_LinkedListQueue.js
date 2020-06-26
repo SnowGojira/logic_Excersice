@@ -29,7 +29,7 @@ class LinkedListQueue {
 //应用二
 //用两个堆栈实现queue
 // -enqueue -dequeue -peek -size -isEmpty
-class TwoStackQueue {
+class QueueWithTwoStack {
   constructor() {
     this.stackInput = new Stack();
     this.stackOutput = new Stack();
@@ -40,24 +40,25 @@ class TwoStackQueue {
       this.stackInput.push(this.stackOutput.pop());
     }
   }
-  _getOutputStack() {
-    while (!this.stackInput.isEmpty()) {
-      this.stackOutput.push(this.stackInput.pop());
+  _moveInputToOutput() {
+    if (this.stackOutput.isEmpty()) {
+      while (!this.stackInput.isEmpty()) {
+        this.stackOutput.push(this.stackInput.pop());
+      }
     }
   }
 
   enqueue(value) {
-    this._getInputStack();
     this.stackInput.push(value);
     this.count += 1;
   }
   dequeue() {
-    this._getOutputStack();
+    this._moveInputToOutput();
     this.stackOutput.pop();
     this.count -= 1;
   }
   peek() {
-    this._getOutputStack();
+    this._moveInputToOutput();
     this.stackOutput.peek();
   }
   size() {
@@ -68,45 +69,97 @@ class TwoStackQueue {
   }
 }
 
+//用两个队列得到栈
+class StackWithTwoQueue {
+  constructor() {
+    this.queueInput = new Queue();
+    this.queueOutput = new Queue();
+    this.top;
+  }
+
+  push(value) {
+    this.queueInput.enqueue(value);
+    this.top = value;
+  }
+  pop() {
+    while (this.queueInput.size() > 1) {
+      this.top = this.queueInput.dequeue();
+      this.queueOutput.enqueue(this.top);
+    }
+
+    [this.queueOutput, this.queueInput] = [this.queueInput, this.queueOutput];
+
+    return this.queueOutput.dequeue();
+  }
+  isEmpty() {
+    return this.queueInput.isEmpty();
+  }
+  peek() {
+    return this.top;
+  }
+  size() {
+    return this.queueInput.size();
+  }
+}
 //====================以下为测试和引用，不要动==========
 //====================================================
 //queue 类
 class Queue {
   constructor() {
     this.array = [];
+    this.length = 0;
   }
 
   enqueue(value) {
-    this.array.push(value);
+    this.array[this.length] = value;
+    this.length += 1;
   }
   dequeue() {
-    this.array.shift();
+    if (this.isEmpty()) return undefined;
+
+    let top = this.peek();
+    //所有数组元素向前移动一位
+    for (let i = 0; i < this.length; i++) {
+      this.array[i] = this.array[i + 1];
+    }
+    this.length -= 1;
+    this.array.length = this.length;
+
+    return top;
   }
   peek() {
     return this.array[0];
   }
   size() {
-    return this.array.length;
+    return this.length;
   }
   isEmpty() {
-    return this.array.length == 0;
+    return this.length == 0;
   }
 }
 //stack 类
 class Stack {
   constructor() {
     this.array = [];
+    this.length = 0;
   }
 
   push(value) {
-    this.array.push(value);
+    this.array[this.length] = value;
+    this.length += 1;
   }
 
   pop() {
-    return this.array.pop();
+    //边界，如果为空
+    if (this.isEmpty()) return undefined;
+    let top = this.peek();
+    this.length -= 1;
+    this.array.length = this.length;
+
+    return top;
   }
   peek() {
-    return this.array[this.array.length - 1];
+    return this.array[this.length - 1];
   }
   isEmpty() {
     return this.array.length == 0;
@@ -384,10 +437,23 @@ queue.dequeue();
 
 console.log(queue.isEmpty() == false && queue.size() == 3 && queue.peek() == 2);
 
-let queue2 = new TwoStackQueue();
+let queue2 = new QueueWithTwoStack();
 queue2.enqueue(1);
 queue2.enqueue(2);
 queue2.enqueue(3);
 queue2.enqueue(4);
+console.log(queue2);
 queue2.dequeue();
 console.log(queue2);
+queue2.enqueue(5);
+console.log(queue2);
+queue2.dequeue();
+console.log(queue2);
+
+let stack1 = new StackWithTwoQueue();
+stack1.push(1);
+stack1.push(2);
+stack1.push(3);
+stack1.push(4);
+stack1.pop();
+console.log(stack1);
