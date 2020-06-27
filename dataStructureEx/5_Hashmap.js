@@ -19,19 +19,21 @@ function FindFirstNorepeatChar(str) {
 }
 
 //应用二找到第一个重复的字母
+//使用set来解决
 function FindFirstRepeatChar(str) {
-  let obj = {};
-  for (let a of str) {
-    if (!obj[a]) {
-      obj[a] = 1;
-    } else {
-      obj[a] += 1;
-    }
-  }
+  //创建set表
+  //set会自动去重
+  //apple为例
+  //Set { a', 'p', 'l' , 'e' }
+  let set = new Set();
 
-  for (let i in obj) {
-    if (obj[i] > 1) return i;
+  for (let a of str) {
+    if (set.has(a)) return a;
+
+    set.add(a);
   }
+  //如果没有重复的情况，返回退出码-1
+  return -1;
 }
 console.log(FindFirstNorepeatChar("a green apple") == "g");
 console.log(FindFirstRepeatChar("green apple") == "e");
