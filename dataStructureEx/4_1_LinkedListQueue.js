@@ -35,11 +35,7 @@ class QueueWithTwoStack {
     this.stackOutput = new Stack();
     this.count = 0;
   }
-  _getInputStack() {
-    while (!this.stackOutput.isEmpty()) {
-      this.stackInput.push(this.stackOutput.pop());
-    }
-  }
+
   _moveInputToOutput() {
     if (this.stackOutput.isEmpty()) {
       while (!this.stackInput.isEmpty()) {
@@ -59,7 +55,7 @@ class QueueWithTwoStack {
   }
   peek() {
     this._moveInputToOutput();
-    this.stackOutput.peek();
+    return this.stackOutput.peek();
   }
   size() {
     return this.count;
@@ -442,13 +438,9 @@ queue2.enqueue(1);
 queue2.enqueue(2);
 queue2.enqueue(3);
 queue2.enqueue(4);
-console.log(queue2);
 queue2.dequeue();
-console.log(queue2);
 queue2.enqueue(5);
-console.log(queue2);
-queue2.dequeue();
-console.log(queue2);
+console.log(queue2.peek() == 2);
 
 let stack1 = new StackWithTwoQueue();
 stack1.push(1);
@@ -456,4 +448,4 @@ stack1.push(2);
 stack1.push(3);
 stack1.push(4);
 stack1.pop();
-console.log(stack1);
+console.log(stack1.peek() == 3);
