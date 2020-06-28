@@ -36,23 +36,27 @@ class Hashmap {
     while (prev.next) {
       let current = prev.next;
       //如果是头文件
+      //prev还是头的时候
       if (list.first.value.key == key) {
-        list.first = current;
+        console.log("In first");
+        return list.removeFirst();
       }
       //如果是尾文件
       if (list.last.value.key == key) {
-        list.last = prev;
-        prev.next = null;
+        return list.removeLast();
       }
+
       //中间删除文件
       if (current.value.key == key) {
+        let value = current.value.value;
         prev.next = current.next;
-        return;
+        return value;
       }
       prev = prev.next;
     }
     return -1;
   }
+
   _hash(k) {
     let index = k % this.size;
     return index;
@@ -334,10 +338,12 @@ var hashmap = new Hashmap();
 var pair1 = new Pair(1, "a");
 var pair2 = new Pair(2, "ab");
 var pair3 = new Pair(7, "abc");
+var pair4 = new Pair(12, "abcd");
 
 hashmap.put(pair1);
 hashmap.put(pair2);
 hashmap.put(pair3);
-hashmap.remove(2);
-console.log(hashmap);
+hashmap.put(pair4);
+hashmap.remove(12);
+console.log(hashmap.storage[2]);
 console.log(hashmap.get(7));
