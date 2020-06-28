@@ -11,8 +11,18 @@ class Hashmap {
       this.storage.push(list);
     }
   }
-  put(pair) {
-    let index = this._hash(pair.key);
+  put(key, value) {
+    let index = this._hash(key);
+    let pair = new Pair(key, value);
+    //如果有相同键值的情况下
+    let current = this.storage[index].first;
+    while (current) {
+      if (current.value.key == key) {
+        current.value.value = value;
+        return;
+      }
+      current = current.next;
+    }
     this.storage[index].addLast(pair);
   }
   get(key) {
@@ -335,15 +345,12 @@ class Node {
 
 ///=========================
 var hashmap = new Hashmap();
-var pair1 = new Pair(1, "a");
-var pair2 = new Pair(2, "ab");
-var pair3 = new Pair(7, "abc");
-var pair4 = new Pair(12, "abcd");
 
-hashmap.put(pair1);
-hashmap.put(pair2);
-hashmap.put(pair3);
-hashmap.put(pair4);
+hashmap.put(1, "a");
+hashmap.put(2, "ab");
+hashmap.put(2, "abb");
+hashmap.put(7, "abc");
+hashmap.put(12, "abcd");
 hashmap.remove(12);
 console.log(hashmap.storage[2]);
 console.log(hashmap.get(7));
