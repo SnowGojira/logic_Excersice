@@ -35,5 +35,6 @@ function FindFirstRepeatChar(str) {
   //如果没有重复的情况，返回退出码-1
   return -1;
 }
+
 console.log(FindFirstNorepeatChar("a green apple") == "g");
 console.log(FindFirstRepeatChar("green apple") == "e");
