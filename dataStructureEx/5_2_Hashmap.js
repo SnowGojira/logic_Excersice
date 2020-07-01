@@ -352,5 +352,5 @@ hashmap.put(2, "abb");
 hashmap.put(7, "abc");
 hashmap.put(12, "abcd");
 hashmap.remove(12);
-console.log(hashmap.storage[2]);
-console.log(hashmap.get(7));
+console.log(hashmap.storage[2].first.next.value.value == "abc");
+console.log(hashmap.get(7) == "abc");

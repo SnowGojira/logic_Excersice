@@ -79,4 +79,6 @@ function twoSum(array, k) {
 console.log(FindFirstNorepeatChar("a green apple") == "g");
 console.log(FindFirstRepeatChar("green apple") == "e");
 console.log(countPairsWithDiff([1, 7, 5, 9, 2, 12, 3], 2) == 4);
-console.log(twoSum([2, 7, 11, 15], 9));
+console.log(
+  twoSum([2, 7, 11, 15], 9)[0] == 1 && twoSum([2, 7, 11, 15], 9)[1] == 0
+);
