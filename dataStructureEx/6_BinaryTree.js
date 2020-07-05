@@ -1,9 +1,12 @@
 class BinaryTree {
   constructor() {
     this.root = null;
+    this.count = 0;
   }
 
   insert(value) {
+    this.count += 1;
+
     let node = new Node(value);
     if (!this.root) {
       this.root = node;
@@ -46,10 +49,11 @@ class BinaryTree {
     return false;
   }
 
+  size() {
+    return this.count;
+  }
+
   /////////深度的遍历方法//////////////
-  // traversalPreOrder() {
-  //   this._preOrder(this.root);
-  // }
 
   preOrder(root = this.root) {
     //root->left->right
@@ -78,17 +82,8 @@ class BinaryTree {
     console.log(root.value);
   }
 
-  //高度的计算
-  //高度的公式 = 1+Max(height(L),height(R))
-  //左右比较，高度比较高的+1
-  height(root = this.root) {
-    //边界：空树
-    if (this._isEmpty(root)) return -1;
-    //到达叶片停止，此时高度为0
-    if (this._isLeaf(root)) return 0;
-    return 1 + Math.max(this.height(root.left), this.height(root.right));
-  }
-
+  //=============================
+  //========元素计算=============
   //最小值计算
   //查找公式 = min(left,right,root)
   //左中右节点中的最小值。O(n)
@@ -102,6 +97,18 @@ class BinaryTree {
     let left = this.min(root.left);
     let right = this.min(root.right);
     return Math.min(Math.min(left, right), root.value);
+  }
+  //最大值
+  max(root = this.root) {
+    //edge case
+    if (this._isEmpty(root))
+      throw new Error("null pointer: this tree is empty");
+
+    if (this._isLeaf(root)) return root.value;
+
+    let left = this.max(root.left);
+    let right = this.max(root.right);
+    return Math.max(Math.max(left, right), root.value);
   }
 
   //Binary Search Tree
@@ -118,6 +125,46 @@ class BinaryTree {
     return this.min(root.left);
   }
 
+  //高度的计算
+  //高度的公式 = 1+Max(height(L),height(R))
+  //左右比较，高度比较高的+1
+  height(root = this.root) {
+    //边界：空树
+    if (this._isEmpty(root)) return -1;
+    //到达叶片停止，此时高度为0
+    if (this._isLeaf(root)) return 0;
+    return 1 + Math.max(this.height(root.left), this.height(root.right));
+  }
+
+  //查找距离d=n level上的所有元素
+  //           7
+  //      5         9
+  //   3    6     8  10
+  // 2  4
+  //上面的例子 d=2 得到 [3,6,8,10]
+  findItemsByDistance(distance, root = this.root, sets = []) {
+    //边界条件
+    if (root == null) return;
+
+    //迭代条件：
+    //distance 等于0
+    if (distance == 0) {
+      sets.push(root.value);
+    }
+    distance -= 1;
+    this.findItemsByDistance(distance, root.left, sets);
+    this.findItemsByDistance(distance, root.right, sets);
+
+    return sets;
+  }
+
+  levelOrder() {
+    //知道distance，findItemsByLevel遍历
+    let distance = this.height();
+    for (let i = 0; i <= distance; i++) {
+      console.log(this.findItemsByDistance(i));
+    }
+  }
   _isLeaf(node) {
     return node.left == null && node.right == null;
   }
@@ -145,7 +192,6 @@ class BinaryTree {
   }
 
   isBST(root = this.root, min = -Infinity, max = Infinity) {
-    console.log("root-min-max", `${root}:${min}:${max}`);
     if (root == null) return true;
 
     if (root.value < min || root.value > max) return false;
@@ -183,10 +229,13 @@ tree2.insert(1);
 tree2.insert(6);
 tree2.insert(8);
 tree2.insert(10);
-//console.log(tree);
-//console.log(tree.find(10));
+console.log(tree.root.left.left.value == 1);
+console.log(tree.find(10));
+console.log(tree.size() == 7);
+
 //tree.postOrder();
 console.log(tree.height() == 2);
-console.log(tree.BSTmin() == 1);
+console.log(tree.min() == 1);
+console.log(tree.max() == 10);
 console.log(tree.equality(tree2));
 console.log(tree.isBST());
