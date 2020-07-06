@@ -49,6 +49,13 @@ class BinaryTree {
     return false;
   }
 
+  //使用recuresion来实现find
+  contains(value, root = this.root) {
+    if (root == null) return false;
+    if (root.value == value) return true;
+    return this.contains(value, root.left) || this.contains(value, root.right);
+  }
+
   size() {
     return this.count;
   }
@@ -124,7 +131,13 @@ class BinaryTree {
 
     return this.min(root.left);
   }
+  countLeaves(root = this.root) {
+    if (root == null) return 0;
 
+    if (this._isLeaf(root)) return 1;
+
+    return this.countLeaves(root.left) + this.countLeaves(root.right);
+  }
   //高度的计算
   //高度的公式 = 1+Max(height(L),height(R))
   //左右比较，高度比较高的+1
@@ -201,6 +214,46 @@ class BinaryTree {
       this.isBST(root.right, root.value + 1, max)
     );
   }
+  //两个值是不是sublings
+  areSubling(value1, value2, root = this.root) {
+    if (root == null) return false;
+
+    var areSubling = false;
+
+    if (root.left != null && root.right != null) {
+      areSubling =
+        (root.left.value == value1 && root.right.value == value2) ||
+        (root.left.value == value2 && root.right.value == value1);
+    }
+
+    return (
+      areSubling ||
+      this.areSubling(value1, value2, root.left) ||
+      this.areSubling(value1, value2, root.right)
+    );
+  }
+  //查找祖先
+  getAncestors(value) {
+    var list = [];
+    this._getAncestors(this.root, value, list);
+    return list;
+  }
+
+  _getAncestors(root, value, list) {
+    if (root == null) return false;
+
+    if (root.value == value) return true;
+
+    if (
+      this._getAncestors(root.left, value, list) ||
+      this._getAncestors(root.right, value, list)
+    ) {
+      list.push(root.value);
+      return true;
+    }
+
+    return false;
+  }
 }
 
 class Node {
@@ -231,11 +284,15 @@ tree2.insert(8);
 tree2.insert(10);
 console.log(tree.root.left.left.value == 1);
 console.log(tree.find(10));
+console.log(tree.contains(10));
 console.log(tree.size() == 7);
 
 //tree.postOrder();
 console.log(tree.height() == 2);
 console.log(tree.min() == 1);
 console.log(tree.max() == 10);
+console.log(tree.countLeaves() == 4);
 console.log(tree.equality(tree2));
 console.log(tree.isBST());
+console.log(tree.areSubling(4, 9));
+console.log(tree.getAncestors(1));
