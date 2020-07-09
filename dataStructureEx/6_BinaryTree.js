@@ -198,8 +198,8 @@ class BinaryTree {
     if (root1 !== null && root2 !== null)
       return (
         root1.value == root2.value &&
-        this.equals(root1.right, root2.right) &&
-        this.equals(root1.left, root2.left)
+        this.equals(root1.left, root2.left) &&
+        this.equals(root1.right, root2.right)
       );
     return false;
   }
@@ -219,7 +219,6 @@ class BinaryTree {
     if (root == null) return false;
 
     var areSubling = false;
-
     if (root.left != null && root.right != null) {
       areSubling =
         (root.left.value == value1 && root.right.value == value2) ||
@@ -232,21 +231,22 @@ class BinaryTree {
       this.areSubling(value1, value2, root.right)
     );
   }
+
   //查找祖先
   getAncestors(value) {
     var list = [];
-    this._getAncestors(this.root, value, list);
+    this._getAncestors(value, this.root, list);
     return list;
   }
 
-  _getAncestors(root, value, list) {
+  _getAncestors(value, root = this.root, list = []) {
     if (root == null) return false;
 
     if (root.value == value) return true;
 
     if (
-      this._getAncestors(root.left, value, list) ||
-      this._getAncestors(root.right, value, list)
+      this._getAncestors(value, root.left, list) ||
+      this._getAncestors(value, root.right, list)
     ) {
       list.push(root.value);
       return true;
@@ -282,12 +282,12 @@ tree2.insert(1);
 tree2.insert(6);
 tree2.insert(8);
 tree2.insert(10);
+
 console.log(tree.root.left.left.value == 1);
 console.log(tree.find(10));
 console.log(tree.contains(10));
-console.log(tree.size() == 7);
 
-//tree.postOrder();
+//tree.preOrder();
 console.log(tree.height() == 2);
 console.log(tree.min() == 1);
 console.log(tree.max() == 10);
