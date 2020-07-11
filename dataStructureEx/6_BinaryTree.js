@@ -105,19 +105,6 @@ class BinaryTree {
     let right = this.min(root.right);
     return Math.min(Math.min(left, right), root.value);
   }
-  //最大值
-  max(root = this.root) {
-    //edge case
-    if (this._isEmpty(root))
-      throw new Error("null pointer: this tree is empty");
-
-    if (this._isLeaf(root)) return root.value;
-
-    let left = this.max(root.left);
-    let right = this.max(root.right);
-    return Math.max(Math.max(left, right), root.value);
-  }
-
   //Binary Search Tree
   //只需要找到最左边的值
   BSTmin(root = this.root) {
@@ -131,6 +118,21 @@ class BinaryTree {
 
     return this.min(root.left);
   }
+
+  //*****最大值选做******//
+  max(root = this.root) {
+    //edge case
+    if (this._isEmpty(root))
+      throw new Error("null pointer: this tree is empty");
+
+    if (this._isLeaf(root)) return root.value;
+
+    let left = this.max(root.left);
+    let right = this.max(root.right);
+    return Math.max(Math.max(left, right), root.value);
+  }
+
+  //计算叶节点的个数
   countLeaves(root = this.root) {
     if (root == null) return 0;
 
@@ -138,6 +140,7 @@ class BinaryTree {
 
     return this.countLeaves(root.left) + this.countLeaves(root.right);
   }
+
   //高度的计算
   //高度的公式 = 1+Max(height(L),height(R))
   //左右比较，高度比较高的+1
@@ -163,6 +166,7 @@ class BinaryTree {
     //distance 等于0
     if (distance == 0) {
       sets.push(root.value);
+      return;
     }
     distance -= 1;
     this.findItemsByDistance(distance, root.left, sets);
@@ -170,7 +174,8 @@ class BinaryTree {
 
     return sets;
   }
-
+  //***选做***//
+  //层级遍历
   levelOrder() {
     //知道distance，findItemsByLevel遍历
     let distance = this.height();
@@ -190,9 +195,9 @@ class BinaryTree {
     let root1 = this.root;
     let root2 = tree.root;
 
-    return this.equals(root1, root2);
+    return this._equals(root1, root2);
   }
-  equals(root1, root2) {
+  _equals(root1, root2) {
     if (root1 == null && root2 == null) return true;
 
     if (root1 !== null && root2 !== null)
@@ -204,14 +209,15 @@ class BinaryTree {
     return false;
   }
 
+  //判断是否为二叉树
   isBST(root = this.root, min = -Infinity, max = Infinity) {
     if (root == null) return true;
 
     if (root.value < min || root.value > max) return false;
 
     return (
-      this.isBST(root.left, min, root.value - 1) &&
-      this.isBST(root.right, root.value + 1, max)
+      this.isBST(root.left, min, root.value) &&
+      this.isBST(root.right, root.value, max)
     );
   }
   //两个值是不是sublings
@@ -295,4 +301,4 @@ console.log(tree.countLeaves() == 4);
 console.log(tree.equality(tree2));
 console.log(tree.isBST());
 console.log(tree.areSubling(4, 9));
-console.log(tree.getAncestors(1));
+console.log(tree.getAncestors(1)[0] == 4 && tree.getAncestors(1)[1] == 7);
