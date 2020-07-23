@@ -1,78 +1,25 @@
-var a = "Opps Global!";
+//总结出this的新的规律
+//规律一 function里面的this = window
 
-function foo() {
-  console.log(this.a);
-}
-//情况一
-//foo();
+// console.log("global", this);
+// function foo() {
+//   console.log("function", this);
+// }
+// foo();
 
-let obj = {
-  a: 2,
-  tags: [3, 4],
-  foo: foo,
-  baz() {
-    this.tags.forEach(function (item) {
-      this.foo();
-    });
+//规律二 函数的严格模式下，this = undefined
+
+// function foo() {
+//   "use strict";
+//   console.log("strict function", this);
+// }
+// foo();
+
+//规律三 对象里面的method里的 this = obj
+const obj = {
+  foo: function () {
+    console.log("this", this);
   },
 };
-//情况二
-//obj.foo();
-//情况三
-//obj.baz();
 
-function Obj() {
-  this.a = 2;
-  this.tags = [3, 4];
-}
-
-Obj.prototype.foo = foo;
-Obj.prototype.baz = function () {
-  this.tags.forEach(function (item) {
-    this.foo();
-  });
-};
-
-const obj2 = new Obj();
-//情况四
-//obj2.foo();
-//obj2.baz();
-
-class OBJ {
-  constructor() {
-    this.a = 2;
-    this.tags = [3, 4];
-    this.foo = foo;
-  }
-
-  baz() {
-    this.tags.forEach(function (item) {
-      console.log(this);
-    });
-  }
-}
-
-//情况五
-const obj3 = new OBJ();
-//obj3.foo();
-obj3.baz();
-
-//情况六
-setTimeout(obj.foo, 100);
-//情况七
-const button = document.getElementById("#button");
-button.addEventListener("click", function () {
-  console.log(this);
-});
-
-class Clicker {
-  constructor(element) {
-    this.element = element;
-
-    this.element.addEventListener("click", () => {
-      console.log(this.element);
-    });
-  }
-}
-
-const clicker = new Clicker(button);
+obj.foo();
