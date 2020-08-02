@@ -6,6 +6,6 @@ export default class Circle {
   }
 
   draw() {
-    console.log(`draw circle with ${_radius.get(this)}`);
+    console.log(`hello circle with ${_radius.get(this)}`);
   }
 }

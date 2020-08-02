@@ -1,0 +1,20 @@
+{
+  "name": "logic_Excersice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SnowGojira/logic_Excersice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SnowGojira/logic_Excersice/issues"
+  },
+  "homepage": "https://github.com/SnowGojira/logic_Excersice#readme"
+}
