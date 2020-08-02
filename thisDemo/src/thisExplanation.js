@@ -121,9 +121,9 @@ const colorbtn = new colorButton();
 //colorbtn.render();
 
 //什么是上下文
-var aValue = "Oops Global!";
-function aFunc() {
-  console.log(this.aValue);
-}
+// var aValue = "Oops Global!";
+// function aFunc() {
+//   console.log(this.aValue);
+// }
 
-aFunc();
+// aFunc();

@@ -1,4 +1,4 @@
-import { Circle } from "./module.js";
+import Circle from "./module.js";
 
 const c = new Circle(3);
 
