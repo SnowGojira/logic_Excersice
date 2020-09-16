@@ -148,3 +148,4 @@ var detectCycle = function (head) {
   }
   return fast;
 };
+
