@@ -33,5 +33,6 @@ function binarySearchIter(array, target) {
     return -1;
 }
 
+
 console.log(binarySearchRec(array, 6));
 console.log(binarySearchIter(array, 6));
